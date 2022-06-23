@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="fbdd1cb27fbe46ca909365d07afca8e7" Name="Diagram1" ZoomLevel="62">
+        <EntityTypeShape EntityType="WFBuildingModel.Clients" Width="1.5" PointX="6.875" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="WFBuildingModel.Delivery" Width="1.5" PointX="7.5" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WFBuildingModel.Employees" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WFBuildingModel.Material" Width="1.5" PointX="0.5" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="WFBuildingModel.Orders" Width="1.5" PointX="5.25" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="WFBuildingModel.Position" Width="1.5" PointX="0.75" PointY="1.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WFBuildingModel.Products" Width="1.5" PointX="3.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="WFBuildingModel.Storage" Width="1.5" PointX="5.125" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="WFBuildingModel.Suppliers" Width="1.5" PointX="2.375" PointY="7.375" IsExpanded="true" />
+        <AssociationConnector Association="WFBuildingModel.FK_Orders_Clients" ManuallyRouted="false" />
+        <AssociationConnector Association="WFBuildingModel.FK_Delivery_Orders1" ManuallyRouted="false" />
+        <AssociationConnector Association="WFBuildingModel.FK_Employees_Position" ManuallyRouted="false" />
+        <AssociationConnector Association="WFBuildingModel.FK_Orders_Employees" ManuallyRouted="false" />
+        <AssociationConnector Association="WFBuildingModel.FK_Products_Material" ManuallyRouted="false" />
+        <AssociationConnector Association="WFBuildingModel.FK_Orders_Products1" ManuallyRouted="false" />
+        <AssociationConnector Association="WFBuildingModel.FK_Storage_Products" ManuallyRouted="false" />
+        <AssociationConnector Association="WFBuildingModel.FK_Storage_Suppliers" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,609 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="Хранилище WFBuildingModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Orders" Type="int" Nullable="false" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="Price" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar" MaxLength="50" />
+          <Property Name="MiddleName" Type="nvarchar" MaxLength="50" />
+          <Property Name="LastName" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Address" Type="nvarchar" MaxLength="50" />
+          <Property Name="Id_Position" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Material" Type="nvarchar" MaxLength="50" />
+          <Property Name="Tovar" Type="nvarchar" MaxLength="50" />
+          <Property Name="Price" Type="nvarchar" MaxLength="50" />
+          <Property Name="AmountSHT" Type="nvarchar" MaxLength="50" />
+          <Property Name="Colour" Type="nvarchar" MaxLength="50" />
+          <Property Name="Size" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Clients" Type="int" Nullable="false" />
+          <Property Name="Id_Products" Type="int" Nullable="false" />
+          <Property Name="Id_Employees" Type="int" Nullable="false" />
+          <Property Name="Date" Type="date" />
+          <Property Name="Price" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Salary" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Material" Type="int" Nullable="false" />
+          <Property Name="Amount" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="Storage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Id_Suppliers" Type="int" Nullable="false" />
+          <Property Name="Id_Products" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" />
+          <Property Name="Phone" Type="decimal" Precision="18" Scale="0" />
+          <Property Name="Email" Type="nvarchar" MaxLength="50" />
+          <Property Name="PTovar" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <Association Name="FK_Delivery_Orders1">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="Id_Orders" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Position">
+          <End Role="Position" Type="Self.Position" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="Id_Position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Id_Clients" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Id_Employees" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Products1">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Id_Products" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="Id_Material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Storage_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Storage">
+              <PropertyRef Name="Id_Products" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Storage_Suppliers">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Storage">
+              <PropertyRef Name="Id_Suppliers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище WFBuildingModelContainer">
+          <EntitySet Name="Clients" EntityType="Self.Clients" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Delivery" EntityType="Self.Delivery" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Material" EntityType="Self.Material" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Position" EntityType="Self.Position" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Products" EntityType="Self.Products" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Storage" EntityType="Self.Storage" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Delivery_Orders1" Association="Self.FK_Delivery_Orders1">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Position" Association="Self.FK_Employees_Position">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Clients" Association="Self.FK_Orders_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Employees" Association="Self.FK_Orders_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Products1" Association="Self.FK_Orders_Products1">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Material" Association="Self.FK_Products_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Storage_Products" Association="Self.FK_Storage_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Storage" EntitySet="Storage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Storage_Suppliers" Association="Self.FK_Storage_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Storage" EntitySet="Storage" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="WFBuildingModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Clients">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Clients" FromRole="Clients" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Delivery">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Orders" Type="Int32" Nullable="false" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Delivery_Orders1" FromRole="Delivery" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="MiddleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="LastName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id_Position" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Position" Relationship="Self.FK_Employees_Position" FromRole="Employees" ToRole="Position" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Employees" FromRole="Employees" ToRole="Orders" />
+        </EntityType>
+        <EntityType Name="Material">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Material1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Tovar" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="AmountSHT" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Colour" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Size" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Products_Material" FromRole="Material" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Orders">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Clients" Type="Int32" Nullable="false" />
+          <Property Name="Id_Products" Type="Int32" Nullable="false" />
+          <Property Name="Id_Employees" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Precision="0" />
+          <Property Name="Price" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Clients" Relationship="Self.FK_Orders_Clients" FromRole="Orders" ToRole="Clients" />
+          <NavigationProperty Name="Delivery" Relationship="Self.FK_Delivery_Orders1" FromRole="Orders" ToRole="Delivery" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Orders_Employees" FromRole="Orders" ToRole="Employees" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Orders_Products1" FromRole="Orders" ToRole="Products" />
+        </EntityType>
+        <EntityType Name="Position">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Salary" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employees" Relationship="Self.FK_Employees_Position" FromRole="Position" ToRole="Employees" />
+        </EntityType>
+        <EntityType Name="Products">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Material" Type="Int32" Nullable="false" />
+          <Property Name="Amount" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Material" Relationship="Self.FK_Products_Material" FromRole="Products" ToRole="Material" />
+          <NavigationProperty Name="Orders" Relationship="Self.FK_Orders_Products1" FromRole="Products" ToRole="Orders" />
+          <NavigationProperty Name="Storage" Relationship="Self.FK_Storage_Products" FromRole="Products" ToRole="Storage" />
+        </EntityType>
+        <EntityType Name="Storage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Id_Suppliers" Type="Int32" Nullable="false" />
+          <Property Name="Id_Products" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Products" Relationship="Self.FK_Storage_Products" FromRole="Storage" ToRole="Products" />
+          <NavigationProperty Name="Suppliers" Relationship="Self.FK_Storage_Suppliers" FromRole="Storage" ToRole="Suppliers" />
+        </EntityType>
+        <EntityType Name="Suppliers">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Phone" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PTovar" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Storage" Relationship="Self.FK_Storage_Suppliers" FromRole="Suppliers" ToRole="Storage" />
+        </EntityType>
+        <Association Name="FK_Orders_Clients">
+          <End Role="Clients" Type="Self.Clients" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Clients">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Id_Clients" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Delivery_Orders1">
+          <End Role="Orders" Type="Self.Orders" Multiplicity="1" />
+          <End Role="Delivery" Type="Self.Delivery" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Orders">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Delivery">
+              <PropertyRef Name="Id_Orders" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Employees_Position">
+          <End Role="Position" Type="Self.Position" Multiplicity="1" />
+          <End Role="Employees" Type="Self.Employees" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Position">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employees">
+              <PropertyRef Name="Id_Position" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Employees">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Id_Employees" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Products_Material">
+          <End Role="Material" Type="Self.Material" Multiplicity="1" />
+          <End Role="Products" Type="Self.Products" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Material">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Products">
+              <PropertyRef Name="Id_Material" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Orders_Products1">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Orders" Type="Self.Orders" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Orders">
+              <PropertyRef Name="Id_Products" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Storage_Products">
+          <End Role="Products" Type="Self.Products" Multiplicity="1" />
+          <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Products">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Storage">
+              <PropertyRef Name="Id_Products" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Storage_Suppliers">
+          <End Role="Suppliers" Type="Self.Suppliers" Multiplicity="1" />
+          <End Role="Storage" Type="Self.Storage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Suppliers">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Storage">
+              <PropertyRef Name="Id_Suppliers" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="WFBuildingEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Clients" EntityType="Self.Clients" />
+          <EntitySet Name="Delivery" EntityType="Self.Delivery" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" />
+          <EntitySet Name="Material" EntityType="Self.Material" />
+          <EntitySet Name="Orders" EntityType="Self.Orders" />
+          <EntitySet Name="Position" EntityType="Self.Position" />
+          <EntitySet Name="Products" EntityType="Self.Products" />
+          <EntitySet Name="Storage" EntityType="Self.Storage" />
+          <EntitySet Name="Suppliers" EntityType="Self.Suppliers" />
+          <AssociationSet Name="FK_Orders_Clients" Association="Self.FK_Orders_Clients">
+            <End Role="Clients" EntitySet="Clients" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Delivery_Orders1" Association="Self.FK_Delivery_Orders1">
+            <End Role="Orders" EntitySet="Orders" />
+            <End Role="Delivery" EntitySet="Delivery" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Employees_Position" Association="Self.FK_Employees_Position">
+            <End Role="Position" EntitySet="Position" />
+            <End Role="Employees" EntitySet="Employees" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Employees" Association="Self.FK_Orders_Employees">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Products_Material" Association="Self.FK_Products_Material">
+            <End Role="Material" EntitySet="Material" />
+            <End Role="Products" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Orders_Products1" Association="Self.FK_Orders_Products1">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Orders" EntitySet="Orders" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Storage_Products" Association="Self.FK_Storage_Products">
+            <End Role="Products" EntitySet="Products" />
+            <End Role="Storage" EntitySet="Storage" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Storage_Suppliers" Association="Self.FK_Storage_Suppliers">
+            <End Role="Suppliers" EntitySet="Suppliers" />
+            <End Role="Storage" EntitySet="Storage" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище WFBuildingModelContainer" CdmEntityContainer="WFBuildingEntities">
+          <EntitySetMapping Name="Clients">
+            <EntityTypeMapping TypeName="WFBuildingModel.Clients">
+              <MappingFragment StoreEntitySet="Clients">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Delivery">
+            <EntityTypeMapping TypeName="WFBuildingModel.Delivery">
+              <MappingFragment StoreEntitySet="Delivery">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_Orders" ColumnName="Id_Orders" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Employees">
+            <EntityTypeMapping TypeName="WFBuildingModel.Employees">
+              <MappingFragment StoreEntitySet="Employees">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+                <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+                <ScalarProperty Name="LastName" ColumnName="LastName" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Address" ColumnName="Address" />
+                <ScalarProperty Name="Id_Position" ColumnName="Id_Position" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Material">
+            <EntityTypeMapping TypeName="WFBuildingModel.Material">
+              <MappingFragment StoreEntitySet="Material">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Material1" ColumnName="Material" />
+                <ScalarProperty Name="Tovar" ColumnName="Tovar" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+                <ScalarProperty Name="AmountSHT" ColumnName="AmountSHT" />
+                <ScalarProperty Name="Colour" ColumnName="Colour" />
+                <ScalarProperty Name="Size" ColumnName="Size" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Orders">
+            <EntityTypeMapping TypeName="WFBuildingModel.Orders">
+              <MappingFragment StoreEntitySet="Orders">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_Clients" ColumnName="Id_Clients" />
+                <ScalarProperty Name="Id_Products" ColumnName="Id_Products" />
+                <ScalarProperty Name="Id_Employees" ColumnName="Id_Employees" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Price" ColumnName="Price" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Position">
+            <EntityTypeMapping TypeName="WFBuildingModel.Position">
+              <MappingFragment StoreEntitySet="Position">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Salary" ColumnName="Salary" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="WFBuildingModel.Products">
+              <MappingFragment StoreEntitySet="Products">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_Material" ColumnName="Id_Material" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Storage">
+            <EntityTypeMapping TypeName="WFBuildingModel.Storage">
+              <MappingFragment StoreEntitySet="Storage">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Id_Suppliers" ColumnName="Id_Suppliers" />
+                <ScalarProperty Name="Id_Products" ColumnName="Id_Products" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Suppliers">
+            <EntityTypeMapping TypeName="WFBuildingModel.Suppliers">
+              <MappingFragment StoreEntitySet="Suppliers">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Phone" ColumnName="Phone" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="PTovar" ColumnName="PTovar" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
